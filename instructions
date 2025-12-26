@@ -1,0 +1,41 @@
+data/
+se encarga de traer precios
+- descarga datos
+- Los ordena
+-se los pasa al sistema.
+
+
+strategy/
+  Decide cuando comprar o vender
+    - aplica las reglas
+    - no sabe nada de dinero
+    - Solo dice si o no
+
+risk/
+  Controla cuanto comprar 
+    - Calcula el tamaño de a operqcion
+    - Aplica el 1%
+    - decide si se puede operar o no
+
+backtest/
+  Simula el pasado
+    - Avanza dia por dia 
+    - usa data + strategy + risk
+    - Guarda resultados
+
+execution/
+  Habla con el broker
+    - En paper trading: simula ordenes
+    - En real: Envia ordenes reales
+
+logs/
+  Guarda todo lo que pasa
+    - Errores
+    - Compras
+    - ventas
+
+main.py
+  El cerebro central
+    - Une todo
+    - Corr el sistema
+    - Decide el flujo diario
