@@ -1,13 +1,20 @@
 def simple_moving_average_strategy(data, window=5):
     """
-    Estrategia simple basada en media movil
+    Estrategia simple basada en media móvil.
     """
 
-    data['SMA'] = data['Close'].rolling(window=window).mean()
-    last_close=data['Close'].iloc[-1]
-    last_sma=data['SMA'].iloc[-1]
+    close_prices = data["Close"]
+    sma = close_prices.rolling(window=window).mean()
+
+    # Extraemos valores escalares (números reales)
+    last_close = close_prices.iloc[-1].item()
+    last_sma = sma.iloc[-1].item()
+
+    # Validamos datos suficientes
+    if last_sma != last_sma:
+        return "SIN DATOS SUFICIENTES"
 
     if last_close > last_sma:
-        return 'COMPRAR'
+        return "COMPRAR"
     else:
-        return 'NO COMPRAR'
+        return "NO COMPRAR"
