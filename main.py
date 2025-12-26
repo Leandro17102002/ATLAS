@@ -1,5 +1,6 @@
 from data.market_data import get_historical_data
-from strategy.simple_strategy import simple_moving_average_strategy
+from backtest.simple_backstest import run_backtest
+from metrics.performance import calculate_metrics
 
 def main():
     print("Trading bot iniciado correctamente \n")
@@ -10,12 +11,20 @@ def main():
 
     data=get_historical_data(symbol, start_date, end_date)
     
-    decision = simple_moving_average_strategy(data)
+    results = run_backtest(data)
+    metrics = calculate_metrics(results)
 
-    print(f'Decision del bot para {symbol}: {decision}')
+    print("📊 MÉTRICAS DEL BACKTEST\n")
+
+    print(f"Retorno total: {metrics.get('total_return_pct', 0):.2f}%")
+    print(f"Total trades: {metrics.get('total_trades', 0)}")
+    print(f"Ganadoras: {metrics.get('wins', 0)}")
+    print(f"Perdedoras: {metrics.get('losses', 0)}")
+    print(f"Win rate: {metrics.get('win_rate_pct', 0):.2f}%")
+    print(f"Máx. drawdown: {metrics.get('max_drawdown_pct', 0):.2f}%")
 
 
 
-    
+
 if __name__== "__main__":
     main()  # Ejecuta esto solo si este archivo es el principal
