@@ -6,13 +6,19 @@ def main():
     print("Trading bot iniciado correctamente \n")
     
     symbol = "AAPL"
-    start_date = "2023-01-01"
-    end_date= "2023-03-01"
+    start_date = "2022-01-01"
+    end_date= "2023-12-31"
 
     data=get_historical_data(symbol, start_date, end_date)
     
     results = run_backtest(data)
     metrics = calculate_metrics(results)
+
+    initial_capital = results['initial_capital']
+    final_capital = results['final_capital']
+
+    print(f"💰 Capital inicial: ${initial_capital:,.2f}") 
+    print(f"💰 Capital final:   ${final_capital:,.2f}\n")
 
     print("📊 MÉTRICAS DEL BACKTEST\n")
 
