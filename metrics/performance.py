@@ -23,6 +23,8 @@ def calculate_metrics(results):
             losses += 1
 
     win_rate = (wins / total_trades * 100) if total_trades > 0 else 0
+    loss_rate = (losses / total_trades * 100) if total_trades > 0 else 0
+
 
     # Drawdown (protegido)
     if not equity_curve:
@@ -43,5 +45,30 @@ def calculate_metrics(results):
         'wins': wins,
         'losses': losses,
         'win_rate_pct': win_rate,
+        'loss_rate_pct': loss_rate,
         'max_drawdown_pct': max_drawdown
+    }
+
+def calculate_expectancy(trades_pnl):
+    wins = [p for p in trades_pnl if p > 0]
+    losses = [p for p in trades_pnl if p < 0]
+
+    total_trades = len(trades_pnl)
+
+    if total_trades == 0:
+        return None
+
+    win_rate = len(wins) / total_trades
+    loss_rate = len(losses) / total_trades
+
+    avg_win = sum(wins) / len(wins) if wins else 0
+    avg_loss = abs(sum(losses) / len(losses)) if losses else 0
+
+    expectancy = (win_rate * avg_win) - (loss_rate * avg_loss)
+
+    return {
+        'win_rate': win_rate * 100,
+        'avg_win': avg_win,
+        'avg_loss': avg_loss,
+        'expectancy_per_trade': expectancy
     }

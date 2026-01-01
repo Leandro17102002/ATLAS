@@ -20,6 +20,4 @@ def get_historical_data(ticker, start_date, end_date):
 
     data['ATR'] = true_range.rolling(14).mean()
 
-    print(data[["Close", "ATR"]].tail())
-
     return data
